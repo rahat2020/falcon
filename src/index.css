@@ -6,3 +6,8 @@
     font-family: 'Barlow', sans-serif;
     box-sizing: border-box;
 }
+
+html, body {
+    scroll-behavior: smooth;
+  }
+  
