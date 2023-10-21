@@ -1,4 +1,4 @@
-import Content from "./Content"
+import Content from "./Content/Content"
 import Topbar from "./Topbar/Topbar"
 
 const Home = () => {
