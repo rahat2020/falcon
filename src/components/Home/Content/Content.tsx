@@ -34,7 +34,7 @@ const Content = () => {
     // SEARCH QUERY FETCHED DATA
     const [searchQuery, setSearchQuery] = useState('');
     const filteredData = data?.filter((item: {
-        rocket: { rocket_name: string, rocket_type:string },
+        rocket: { rocket_name: string, rocket_type: string },
         mission_name: string,
     }) =>
         (item?.rocket?.rocket_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -66,19 +66,27 @@ const Content = () => {
     // console.log('filteredDataUpComing', filteredDataUpcoming)
 
     // FILTERING DATA BY LAUNCH DATE
-    // const filteredDataLaunch = filteredData?.filter((item: { launch_success: boolean, upcoming: string }) =>
-    //     (item?.launch_success?.toString().toLowerCase().includes(status.toLowerCase()))
-    // );
+    const [filterByDate, setFilterByDate] = useState('all')
+    const filteredDataLaunch = filteredDataUpcoming?.filter((item: { launch_date_utc: string,launch_year:string , all: string }) =>{
+        if (filterByDate === 'all') {
+            return true;
+        }
+            return (
+                item.launch_year?.toString().toLowerCase().includes(filterByDate.toLowerCase()) ||
+                item.launch_date_utc?.toString().toLowerCase().includes(filterByDate.toLowerCase()) ||
+                item.all?.toString().toLowerCase().includes(filterByDate.toLowerCase())
+            );
+    });
 
     // CONTENT PAGINATIONS
     const [itemOffset, setItemOffset] = useState(0);
     const itemsPerPage = 9;
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    const currentItems = filteredDataUpcoming?.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(filteredDataUpcoming?.length / itemsPerPage);
+    const currentItems = filteredDataLaunch?.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(filteredDataLaunch?.length / itemsPerPage);
     const handlePageClick = (event: any) => {
-        const newOffset = (event.selected * itemsPerPage) % filteredDataUpcoming?.length;
+        const newOffset = (event.selected * itemsPerPage) % filteredDataLaunch?.length;
         setItemOffset(newOffset)
     };
 
@@ -144,13 +152,14 @@ const Content = () => {
                                 <option value="true">Success</option>
                                 <option value="all">All</option>
                             </Form.Select>
-                            <Form.Select aria-label="Default select example" size="sm" 
-                            className="border-1 text-secondary shadow-sm rounded ms-md-2 ms-lg-2">
+                            <Form.Select aria-label="Default select example" size="sm"
+                                className="border-1 text-secondary shadow-sm rounded ms-md-2 ms-lg-2"
+                                onChange={(e) => setFilterByDate(e.target.value)}>
                                 <option>By Launch Date</option>
                                 <option value="Last Week">Last Week</option>
                                 <option value="Last Month">Last Month</option>
                                 <option value="Last Year">Last Year</option>
-                                <option value="upcoming">All upcoming</option>
+                                <option value="all">All</option>
                             </Form.Select>
                         </div>
                     </Col>

@@ -9,11 +9,12 @@
 ### Implemented Features
 - Navbar added.
 - Footer added.
-- Goto top added.
+- Go to top added.
 - Content Rendering after fecthing API.
 - Search query implemented by Rocket Name, Rocket type and Mission name.
-- Implemented show upcoming only.
-- Implemented 
+- Implemented show all upcoming only.
+- Implemented filtering options for By Launch status where user can filter data by launch failure, success and all.
+- Implemented filtering options for By Launch date where user can filter data by launch_date and launch year.
 
 
 <!-- 
